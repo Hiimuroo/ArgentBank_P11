@@ -28,7 +28,11 @@ export const getUserToken = createAsyncThunk(
 export const authSlice = createSlice({
     name: 'auth',
     initialState,
-    reducers: {},
+    reducers: {
+        clearError: (state) => {
+            state.error = null;
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(getUserToken.pending, (state) => {
@@ -41,7 +45,7 @@ export const authSlice = createSlice({
             })
             .addCase(getUserToken.rejected, (state, action) => {
                 state.status = 'failed';
-                state.error = action.payload;
+                state.error = action.payload.message || 'Network Problem'; // Transforme l'erreur en une chaîne de caractères
             });
     },
 });
@@ -49,5 +53,7 @@ export const authSlice = createSlice({
 export const selectAuthStatus = (state) => state.auth.status;
 export const selectAuthError = (state) => state.auth.error;
 export const selectAuthToken = (state) => state.auth.token;
+
+export const { clearError } = authSlice.actions; // Action creator pour effacer l'erreur
 
 export default authSlice.reducer;
