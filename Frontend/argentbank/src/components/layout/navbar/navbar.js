@@ -3,6 +3,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle, faSignOut } from '@fortawesome/free-solid-svg-icons';
 
 const Navbar = () => {
+  const token = localStorage.getItem('token');
+
+  const handleSignOut = () => {
+    localStorage.removeItem('token');
+  };
 
   return (
     <nav className="main-nav">
@@ -15,19 +20,22 @@ const Navbar = () => {
         <h1 className="sr-only">Argent Bank</h1>
       </a>
       <div>
+        {token ? (
           <>
             <a className="main-nav-item" href="/user">
               <FontAwesomeIcon icon={faUserCircle} className="fa" />
             </a>
-            <a className="main-nav-item" href='/'>
+            <a className="main-nav-item" onClick={handleSignOut} href="/">
               <FontAwesomeIcon icon={faSignOut} className="fa" />
               Sign Out
             </a>
           </>
+        ) : (
           <a className="main-nav-item" href="/sign-in">
             <FontAwesomeIcon icon={faUserCircle} className="fa" />
             Sign In
           </a>
+        )}
       </div>
     </nav>
   );
