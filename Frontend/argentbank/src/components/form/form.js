@@ -68,10 +68,10 @@ function AuthForm() {
                         checked={credentials.rememberMe}
                         onChange={handleChange}
                     />
-                    <label htmlFor="rememberMe">Remember me</label>
+                    <label htmlFor="rememberMe">Remember me</label> 
                     </div>
                     <button className="sign-in-button" type="submit">Sign In</button>
-                    {authStatus === 'failed' && (
+                    {authStatus === 'failed' && ( //Pas encore actif
                         <span className="errorMessage">{authError}</span>
                     )}
                 </form>

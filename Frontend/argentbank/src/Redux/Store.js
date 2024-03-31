@@ -1,9 +1,10 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import authReducer from '../components/form/authReducer'; 
+import authReducer from '../components/form/authReducer';
+import userReducer from '../components/Contents/userReducer'; 
 
 const rootReducer = combineReducers({
   auth: authReducer,
-    // Autre reducer ici
+  user: userReducer,
 });
 
 const initialState = {};

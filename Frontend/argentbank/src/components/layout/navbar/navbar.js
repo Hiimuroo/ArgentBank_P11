@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle, faSignOut } from '@fortawesome/free-solid-svg-icons';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchUserData } from '../../Contents/userReducer';
 
 const Navbar = () => {
-  const token = localStorage.getItem('token');
+  const dispatch = useDispatch();
+  const { username } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    dispatch(fetchUserData());
+  }, [dispatch]);
 
   const handleSignOut = () => {
     localStorage.removeItem('token');
@@ -20,10 +27,11 @@ const Navbar = () => {
         <h1 className="sr-only">Argent Bank</h1>
       </a>
       <div>
-        {token ? (
+        {username ? (
           <>
             <a className="main-nav-item" href="/user">
               <FontAwesomeIcon icon={faUserCircle} className="fa" />
+              {username}
             </a>
             <a className="main-nav-item" onClick={handleSignOut} href="/">
               <FontAwesomeIcon icon={faSignOut} className="fa" />
