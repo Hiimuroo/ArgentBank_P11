@@ -8,8 +8,18 @@ const UserHome = () => {
   return (
     <main className="main bg-dark">
       <div className="header">
-        <h1>Welcome back </h1>
-        <h1> {firstName} {lastName} !</h1>
+      <h1>Welcome back </h1>
+      <h1> {firstName} {lastName} !</h1>
+      <div className='editdiv'>
+      <input
+        className='editinput'
+        type="text"
+        placeholder="Nouveau Username"
+      />
+      <button className='editbtn'>Save</button>
+      <button className='editbtn'>Cancel</button>
+      </div>
+      <button className='primarybtn'>Edit User</button>
       </div>
       <h2 className="sr-only">Accounts</h2>
       <Account title="Argent Bank Checking (x8349)" amount="$2,082.79" description="Available Balance" />
