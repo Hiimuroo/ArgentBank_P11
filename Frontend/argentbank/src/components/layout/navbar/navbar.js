@@ -1,19 +1,25 @@
 import React, { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle, faSignOut } from '@fortawesome/free-solid-svg-icons';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchUserData } from '../../Contents/userReducer';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUserData, emptyUserData, getUserData } from '../../Contents/userReducer';
 
 const Navbar = () => {
   const dispatch = useDispatch();
-  const { username } = useSelector((state) => state.user);
+  const token = localStorage.getItem('token');
+  const { userName } = useSelector(getUserData);
 
   useEffect(() => {
-    dispatch(fetchUserData());
-  }, [dispatch]);
+    if (token) {
+      dispatch(fetchUserData(token));
+    }
+  }, [dispatch, token]);
 
   const handleSignOut = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('email');
+    localStorage.removeItem('password');
+    dispatch(emptyUserData());
   };
 
   return (
@@ -27,13 +33,13 @@ const Navbar = () => {
         <h1 className="sr-only">Argent Bank</h1>
       </a>
       <div>
-        {username ? (
+        {token ? (
           <>
             <a className="main-nav-item" href="/user">
               <FontAwesomeIcon icon={faUserCircle} className="fa" />
-              {username}
+              {userName && <span>{userName}</span>}
             </a>
-            <a className="main-nav-item" onClick={handleSignOut} href="/">
+            <a className="main-nav-item" onClick={handleSignOut} href='/'>
               <FontAwesomeIcon icon={faSignOut} className="fa" />
               Sign Out
             </a>

@@ -5,11 +5,11 @@ import Footer from '../components/layout/footer/footer.js';
 
 const SignInPage = () => {
   return (
-    <body>
+    <div className="App">
         <Navbar />
         <SignInForm />
         <Footer />
-    </body>
+    </div>
   );
 }
 

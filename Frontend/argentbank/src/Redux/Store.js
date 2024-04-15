@@ -1,6 +1,6 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import authReducer from '../components/form/authReducer';
-import userReducer from '../components/Contents/userReducer'; 
+import { userReducer } from '../components/Contents/userReducer'; 
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -8,7 +8,6 @@ const rootReducer = combineReducers({
 });
 
 const initialState = {};
-
 const store = configureStore({
   preloadedState: initialState,
   reducer: rootReducer,
