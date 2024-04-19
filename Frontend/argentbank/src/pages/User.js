@@ -4,6 +4,8 @@ import Navbar from '../components/layout/navbar/navbar.js';
 import MainContent from '../components/Contents/userHome.js';
 import Footer from '../components/layout/footer/footer.js';
 
+// PAGE ACCESSIBLE SEULEMENT SI TOKEN PRESENT
+
 const UserPage = () => {
   const token = localStorage.getItem('token');
 

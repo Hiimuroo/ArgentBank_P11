@@ -11,25 +11,44 @@ function AuthForm() {
     const [credentials, setCredentials] = useState({
         email: '',
         password: '',
+        rememberMe: false,
     });
     const authError = useSelector(selectAuthError); 
     const authStatus = useSelector(selectAuthStatus); 
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        await dispatch(getUserToken(credentials));
-    };
+    useEffect(() => {
+        // Récupération des informations d'identification du stockage local lors du chargement initial
+        const storedCredentials = localStorage.getItem('credentials');
+        if (storedCredentials) {
+            setCredentials(JSON.parse(storedCredentials));
+        }
+    }, []);
 
     useEffect(() => {
+        // Rediriger vers la page `/user` lorsque l'état `authStatus` passe à `'succeeded'`
         if (authStatus === 'succeeded') {
-            Navigate('/user'); 
+            Navigate('/user');
         }
     }, [authStatus, Navigate]);
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        // Stockage des informations d'identification dans le stockage local si Remember Me est coché
+        if (credentials.rememberMe) {
+            localStorage.setItem('credentials', JSON.stringify(credentials));
+        } else {
+            localStorage.removeItem('credentials');
+        }
+        await dispatch(getUserToken(credentials));
+    };
+
     const handleChange = (event) => {
+        const { name, value, type, checked } = event.target;
+        const newValue = type === 'checkbox' ? checked : value;
+
         setCredentials({
             ...credentials,
-            [event.target.name]: event.target.value,
+            [name]: newValue,
         });
     };
 
@@ -61,24 +80,23 @@ function AuthForm() {
                         />
                     </div>
                     <div className="input-remember">
-                    <input
-                        type="checkbox"
-                        id="rememberMe"
-                        name="rememberMe"
-                        checked={credentials.rememberMe}
-                        onChange={handleChange}
-                    />
-                    <label htmlFor="rememberMe">Remember me</label> 
+                        <input
+                            type="checkbox"
+                            id="rememberMe"
+                            name="rememberMe"
+                            checked={credentials.rememberMe}
+                            onChange={handleChange}
+                        />
+                        <label htmlFor="rememberMe">Remember me</label> 
                     </div>
                     <button className="sign-in-button" type="submit">Sign In</button>
-                    {authStatus === 'failed' && ( // Pas encore actif
+                    {authStatus === 'failed' && (
                         <span className="errorMessage">{authError}</span>
                     )}
                 </form>
             </section>
         </main>
     );
-    
 }
 
 export default AuthForm;
