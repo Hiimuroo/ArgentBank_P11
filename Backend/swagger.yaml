@@ -163,7 +163,7 @@ paths:
         '200':
           description: Transaction récupérée avec succès
           schema:
-            $ref: '#/definitions/Transaction'
+            $ref: '#/definitions/Transaction détails'
         '401':
           description: Non autorisé
         '404':
@@ -188,7 +188,7 @@ paths:
         '200':
           description: Informations mises à jour avec succès
           schema:
-            $ref: '#/definitions/Transaction'
+            $ref: '#/definitions/Transaction détails'
         '400':
           description: Requête incorrecte
         '401':
@@ -278,6 +278,25 @@ definitions:
       userName:
         type: string
   Transaction:
+    type: object
+    properties:
+      id:
+        type: string
+        description: ID de la transaction
+      account_id:
+        type: string
+        description: ID du compte associé
+      amount:
+        type: number
+        description: Montant de la transaction
+      payment_type:
+        type: string
+        description: Type de paiement de la transaction
+      date:
+        type: string
+        format: date-time
+        description: Date et heure de la transaction
+  Transaction détails:
     type: object
     properties:
       id:
