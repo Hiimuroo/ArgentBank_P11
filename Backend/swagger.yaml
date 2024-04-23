@@ -152,6 +152,24 @@ paths:
         description: ID de la transaction à manipuler
         required: true
         type: string
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Transactions
+      summary: Obtenir une Transaction par ID
+      description: API pour obtenir une transaction spécifique par son ID
+      responses:
+        '200':
+          description: Transaction récupérée avec succès
+          schema:
+            $ref: '#/definitions/Transaction'
+        '401':
+          description: Non autorisé
+        '404':
+          description: Transaction non trouvée
+        '500':
+          description: Erreur interne du serveur
     put:
       security:
         - Bearer: []
@@ -187,29 +205,12 @@ paths:
       summary: Supprimer les Informations de Transaction
       description: |
         API pour supprimer des informations d'une transaction spécifique.
-        Si le champ 'description' et/ou 'category' est laissé vide dans la requête,
-        la description et/ou la catégorie de la transaction seront supprimées.
       parameters:
         - name: transactionId
           in: path
           description: ID de la transaction à manipuler
           required: true
           type: string
-        - in: body
-          name: body
-          description: |
-            Options pour la suppression des champs 'description' et 'category'.
-            Laisser les champs vides pour les supprimer.
-          required: false
-          schema:
-            type: object
-            properties:
-              description:
-                type: string
-                description: Description de la transaction à supprimer
-              category:
-                type: string
-                description: Catégorie de la transaction à supprimer
       responses:
         '204':
           description: Informations supprimées avec succès
