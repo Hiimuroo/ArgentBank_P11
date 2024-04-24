@@ -163,7 +163,7 @@ paths:
         '200':
           description: Transaction récupérée avec succès
           schema:
-            $ref: '#/definitions/Transaction détails'
+            $ref: '#/definitions/TransactionDetails'
         '401':
           description: Non autorisé
         '404':
@@ -188,7 +188,7 @@ paths:
         '200':
           description: Informations mises à jour avec succès
           schema:
-            $ref: '#/definitions/Transaction détails'
+            $ref: '#/definitions/TransactionDetails'
         '400':
           description: Requête incorrecte
         '401':
@@ -296,7 +296,7 @@ definitions:
         type: string
         format: date-time
         description: Date et heure de la transaction
-  Transaction détails:
+  TransactionDetails:
     type: object
     properties:
       id:
